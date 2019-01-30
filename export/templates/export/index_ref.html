@@ -1,0 +1,67 @@
+{% extends "export/base.html" %}
+{% load static %}
+
+{% block title %}車両予約・記録ページ{% endblock %}
+
+
+{% block script %}
+    <script type="text/javascript" src="{% static 'mycalendar/js/test.js' %}"></script>
+
+{% endblock %}
+
+
+{% block header %}
+
+{% include 'mycalendar/includes/header.html' %}
+
+   
+
+
+{% endblock %}
+
+
+{% block main %}
+
+    <ul class="nav justify-content-center">
+     <!-- <li class="nav-item">
+        <a class="nav-link" href="{% url 'export:index_ref' %}">Index</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'export:import' %}">Import</a>
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'export:ref-export' %}">Export</a>
+      </li>
+    </ul>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>給油キー</th>
+      <th>給油日</th>
+      <th>給油場所</th>
+      <th>給油時の走行距離</th>
+      <th>給油量</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in refrecord %}
+      <tr>
+        <td>{{ item.refuel_key }}</td>
+        <td>{{ item.date }}</td>
+        <td>{{ item.location }}</td>
+        <td>{{ item.distance }}</td>
+        <td>{{ item.amount }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,166 @@
+{% load static %}
+{{ month_current | date:"Y年m月" }}{{ day }}日の運行記録<br>
+
+{% for item in send_record %}
+
+{% for item2 in item.record_list %}
+<span style="position:absolute;top: {{ item2.pos_y }}px;left: {{ item2.pos_x }}%";  data-toggle="tooltip" data-placement="top" title="【{{ item2.record_item.name }}】{{item2.record_item.start_date.month}}/{{item2.record_item.start_date.day}}/{{item2.record_item.start_date.hour}}時{{item2.record_item.start_date.minute}}分"> 
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-sm" data-toggle="modal" data-target="#exampleModal_{{item2.record_item.id}}">
+  <div style="font-size: 15px;font-weight: bold;" align="center">{{ item2.record_item.name }}</div> 
+
+{% if item2.is_past == True %}
+
+  <i class="fas fa-car-side fa-lg" style="margin-left: 0px;color: #63c6c1;"></i>
+
+{% else %}
+
+  <i class="fas fa-car-side fa-lg" style="margin-left: 0px;color: #cc6a7d;"></i>
+
+{% endif %}
+
+
+</button><br>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal_{{item2.record_item.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">車両名：{{ item2.record_item.name }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+<table class="table">
+  <tbody>
+    <tr>
+      <th scope="row">社員番号：</th>
+      <td>{{ item2.record_item.employee_number }}</td>
+    </tr>
+    <tr>
+      <th scope="row">開始日時：</th>
+      <td>{{ item2.record_item.start_date }}</td>
+    </tr>
+    <tr>
+      <th scope="row">終了日時：</th>
+      <td>{{ item2.record_item.end_date }}</td>
+    </tr>
+    <tr>
+      <th scope="row">行き先：</th>
+      <td>{{ item2.record_item.destination }}</td>
+    </tr>
+  </tbody>
+</table>	
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <img src="{{item2.image_url}}" style="height: {{item2.len}}px;width: 28px;margin-left:7px;"/>
+</span>
+
+{% endfor %}
+
+{% endfor %}
+
+
+
+
+<table id="week_calendar" class="table table-bordered table-sm" style="cursor:url(/static/mycalendar/images/car_icon.png),crosshair">
+
+  <thead>
+    <tr>
+      <th scope="col" style="width: 80px;">開始時刻</th>
+      <th scope="col"><div align="center">スケジュール</div></th>
+    </tr>
+  </thead>
+  <tbody>
+
+{% for item in num_list %}
+    <tr>
+      <th scope="row">{{ item }}</th>
+        <td data-toggle="modal" data-target="#week_mordal_{{ item }}" >
+
+
+        </td>
+    </tr>
+
+    <div class="modal fade" id="week_mordal_{{ item }}" tabindex="-1" role="dialog" aria-labelledby="week_mordal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+	<div class="modal-content" style="width:700px;height:400px; margin-bottom:-50px;margin-left: -30px;">
+	  <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">予約フォーム</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+	  </div>
+	  <div class="modal-body">
+	    <div class="reserve_item" id="toggle_item_{{item}}" ><input id="chkToggle_{{item}}" data-width="200" data-height="30" type="checkbox" data-toggle="toggle" data-on="車両予約" data-off="メンテナンス予約" checked></div>
+	    時間帯：{{ item }}時<br>
+
+	    <div class="reserve_content">
+	      
+	      <form action="" method="POST" >
+		{{ car_record_form.non_field_errors }}
+		<input name="form_name" value="record_form" hidden></input>
+		<input name="form_number" value="{{item}}" hidden></input>
+		<input name="employee_number" value="{{user.username}}" hidden></input>
+		<label style="width:180px;">車両：</label>{{ car_record_form.name }}<br>
+		<label style="width:180px;">社員番号：</label><input type="text" name="employee_number" id="id_employee_number" maxlength="20" value="0000" required></br>
+		<label style="width:180px;">開始時刻：</label><input type="text" name="start_date_0" required id="id_start_date_0_{{item}}_reserve" value="{{year}}-{{month}}-{{day}}"><input type="text" name="start_date_1" required id="id_start_date_1_{{item}}_reserve" value="{{item}}:00"></br>
+		<label style="width:180px;">終了時刻：</label><input type="text" name="end_date_0" required id="id_end_date_0_{{item}}_reserve" value="{{year}}-{{month}}-{{day}}"><input type="text" name="end_date_1" required id="id_end_date_1_{{item}}_reserve" value="{{item}}:00"></br>
+		<label style="width:180px;">行き先：</label><input type="text" name="destination" id="id_destination" maxlength="20" value="無記入" required></br>
+		<div style="height:50px;"></div>
+		<input type="hidden" name="csrfmiddlewaretoken" value="Dk36RkUnooRn9Rc6GxRsHzKfvVbTPGxqXywptcUiWVSVIled2OU3BiDbT3dIujBa">
+		{% csrf_token %}
+		<button type="submit" class="btn btn-primary btn-block" style="width:200px;position:absolute;top:85%;left:35%;">予約</button>
+	    </form>
+
+	    </div>
+
+	    <div class="reserve_content">
+
+	      <form action="" method="POST" >
+		{{ car_record_form.non_field_errors }}
+		<input name="form_name" value="maintenance_form" hidden></input>
+		<input name="form_number" value="{{item}}" hidden></input>
+		<label style="width:150px;">車両：</label>{{ car_record_form.name }}<br>
+		<label style="width:150px;">開始時刻：</label><input type="text" name="start_date_0" required id="id_start_date_0_{{item}}_maintenance" value="{{year}}-{{month}}-{{day}}"><input type="text" name="start_date_1" required id="id_start_date_1_{{item}}_maintenance" value="{{item}}:00"></br>
+		<label style="width:150px;">終了時刻：</label><input type="text" name="end_date_0" required id="id_end_date_0_{{item}}_maintenance" value="{{year}}-{{month}}-{{day}}"><input type="text" name="end_date_1" required id="id_end_date_1_{{item}}_maintenance" value="{{item}}:00"></br>
+		<label style="width:150px;">メンテナンス内容：</label><input type="text" name="content" maxlength="200" value="無記入" required id="id_content"></br>
+		<div style="height:50px;"></div>
+		<input type="hidden" name="csrfmiddlewaretoken" value="vhqzG54CdNFC94jWblNdKANY2tz698u3PvTSiX4xLkGaIyl3xCQOEjGUqBBVOLyN">
+		{% csrf_token %}
+		<button type="submit" class="btn btn-primary btn-block" style="width:200px;position:absolute;top:85%;left:35%;">予約</button>
+	    </div>
+	    </form>
+
+	    </div>
+
+	  </div>
+	  <div class="modal-footer">
+            <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>-->
+	  </div>
+	</div>
+      </div>
+    </div>
+
+
+{% endfor %}
+
+
+  </tbody>
+</table>
+

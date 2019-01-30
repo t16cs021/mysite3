@@ -1,0 +1,75 @@
+{% extends "login/base.html" %}
+
+{% load static %}
+
+{% block title %}ログインページ{% endblock %}
+
+{% block login_index %}
+
+
+
+<div class="ui center aligned grid">
+  <div class="eight wide column">
+    <a class="ui button" href="#">東京都</a>
+  </div>
+  <div class="eight wide column">
+
+
+    <button type="submit" class="btn btn-primary">Create an account</button>
+  </form>
+</div>
+
+
+  </div>
+</div>
+
+
+
+
+
+<a href="../">ログイン</a>
+
+
+<font color="red">{{warning_text}}</font>
+
+<p>ここは、{{page_name}}です。</p>
+
+<div class="login_form">
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    <table>
+      <tr>
+	<td>{{ form.username.label_tag }}</td>
+	<td>{{ form.username }}</td>
+      </tr>
+      <tr>
+	<td>{{ form.email.label_tag }}</td>
+	<td>{{ form.email }}</td>
+      </tr>
+      <tr>
+	<td>{{ form.password1.label_tag }}</td>
+	<td>{{ form.password1 }}</td>
+      </tr>
+      <tr>
+	<td>{{ form.password2.label_tag }}</td>
+	<td>{{ form.password2 }}</td>
+      </tr>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Create an account</button>
+  </form>
+</div>
+
+<div>
+
+    <a href='{{ request.build_absolute_uri }}mycalendar'>ログイン</a>
+    <a href="./admin">管理者ページへ</a><br>
+</div>
+
+
+
+
+
+<script type="text/javascript" src="{% static 'login/js/test.js' %}"></script>
+{% endblock %}

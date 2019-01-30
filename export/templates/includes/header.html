@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <span class="navbar-brand mb-0 h1"><a class="navbar-brand" href="./"><img src="/static/mycalendar/images/logo.svg" width="180" height="35" alt=""></a></span>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!--ナビ：右詰め-->
+        <ul class="navbar-nav mr-auto">
+        </ul>
+
+        <!--ナビ：右詰め-->
+	<ul class="navbar-nav mr-sm-2">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    エクスポート
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		  <a class="dropdown-item" href="/export/">エクスポート（車両一覧）</a>
+		  <a class="dropdown-item" href="./">エクスポート（...一覧）</a>
+                </div>
+            </li>
+        </ul>
+
+	<ul class="navbar-nav mr-sm-2">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    予約
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		  <a class="dropdown-item" href='/mycalendar/car_reserve/{{now.year}}/{{now.month}}/{{ now.day }}/'>車両予約</a>
+		  <a class="dropdown-item" href='/mycalendar/car_maintenance/{{now.year}}/{{now.month}}/{{ now.day }}/'>メンテナンス予約</a>
+                </div>
+            </li>
+        </ul>
+
+	<ul class="navbar-nav mr-sm-2">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    記録
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		  <a class="dropdown-item" href='/mycalendar/car_table/{{now.year}}/{{now.month}}/{{ now.day }}/'>車両</a>
+		  <a class="dropdown-item" href='/mycalendar/car_record/{{now.year}}/{{now.month}}/{{ now.day }}/'>運行記録</a>
+		  <a class="dropdown-item" href='/mycalendar/refuel_record/{{now.year}}/{{now.month}}/{{ now.day }}/'>給油記録</a>
+		  <a class="dropdown-item" href='/mycalendar/etc_record/{{now.year}}/{{now.month}}/{{ now.day }}/'>ETC記録</a>
+                </div>
+            </li>
+        </ul>
+
+	<ul class="navbar-nav mr-sm-2">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    ID：{{ user.username }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		  <span class="dropdown-item">権限：{{ superuser_text }}</span>
+		    <a class="dropdown-item" href='/mycalendar/my_record/{{now.year}}/{{now.month}}/{{ now.day }}/'>ユーザ記録</a>
+		    <a class="dropdown-item" href='/mycalendar/my_reserve/{{now.year}}/{{now.month}}/{{ now.day }}/'>ユーザ予約</a>
+		    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/admin">管理者ページ</a>
+                    <a class="dropdown-item" href="/logout">ログアウト</a>
+                </div>
+            </li>
+        </ul>
+
+        <a href="/logout">
+            <button class="btn btn-outline-success my-2 my-sm-0"><i class="fas fa-power-off"></i></button>
+        </a>
+    </div>
+</nav>

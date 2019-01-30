@@ -1,0 +1,31 @@
+ここでは車両のユーザ予約一覧を表示する。
+
+<hr>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">車両名</th>
+      <th scope="col">開始日時</th>
+      <th scope="col">終了日時</th>
+      <th scope="col">行き先</th>
+      <th scope="col">#</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in record_list %}
+    <tr>
+      <td>{{ item.car_record.name }}</td>
+      <td>{{ item.car_record.start_date }}</td>
+      <td>{{ item.car_record.end_date }}</td>
+      <td>{{ item.car_record.destination }}</td>
+      <form action="" method="POST" >
+	{% csrf_token %}
+	<input name="key" id="id_key" value="{{item.car_record.id}}" hidden>
+	<td><button type="submit" class="btn btn-secondary">削除</button></td>
+	</form>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+

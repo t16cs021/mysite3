@@ -1,0 +1,29 @@
+{% extends "mycalendar/base.html" %}
+
+{% load static %}
+
+{% block title %}カレンダーページ{% endblock %}
+
+{% block mycalendar_index %}
+
+<table>
+<tr>
+  <td>車両名</td>
+  <td>走行距離数</td>
+</tr>
+
+{% for item in cars %}
+
+<tr>
+  <td>{{ item.name }}</td>
+  <td>{{ item.distance }}</td>
+</tr>
+
+{% endfor %}
+</table>
+
+
+<a href="{% url 'car_index' %}">戻る</a><br>
+
+
+{% endblock %}

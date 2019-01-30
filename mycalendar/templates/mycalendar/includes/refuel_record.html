@@ -1,0 +1,22 @@
+ここでは車両の給油記録一覧を表示する。
+
+<table class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+	<th scope="col">給油日</th>
+	<th scope="col">給油場所</th>
+	<th scope="col">給油時の走行距離数</th>
+	<th scope="col">給油量</th>
+    </tr>
+  </thead>
+    <tbody>
+    {% for item in refuel_record %}
+    <tr>
+	<td>{{item.date}}</td>
+	<td>{{item.location}}</td>
+	<td>{{item.distance}}</td>
+	<td>{{item.amount}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

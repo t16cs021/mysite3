@@ -1,0 +1,34 @@
+
+<div align="center">
+<a href='/mycalendar{% if page_name != "" %}/{{page_name}}{% endif %}/{{month_previous.year}}/{{month_previous.month}}/{{ month_previous.day}}/'　 data-toggle="tooltip" data-placement="top" title="前月">&lt;</a>
+{{ month_current | date:"Y年m月" }}
+<a href='/mycalendar{% if page_name != "" %}/{{page_name}}{% endif %}/{{month_next.year}}/{{month_next.month}}/{{ month_next.day}}/'　 data-toggle="tooltip" data-placement="top" title="次月">&gt;</a>
+</div>
+
+<table class="table table-striped table-sm"　style="table-layout: fixed;">
+    <thead class="thead-dark">
+    <tr>
+        {% for w in week_names %}
+        <th>{{ w }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for week in month_days %}
+    <tr>
+        {% for day in week %}
+        {% if now == day %}
+        <td class="table-success">
+            {% else %}
+        <td>
+            {% endif %}
+
+            {% if month_current.month == day.month %}
+                <a href='/mycalendar{% if page_name != "" %}/{{page_name}}{% endif %}/{{day.year}}/{{day.month}}/{{ day.day }}/'>{{ day.day }}</a>
+            {% endif %}
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

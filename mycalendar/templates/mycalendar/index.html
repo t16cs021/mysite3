@@ -1,0 +1,62 @@
+{% extends "mycalendar/base.html" %}
+{% load static %}
+
+{% block title %}車両予約・記録ページ{% endblock %}
+
+
+{% block script %}
+    <script type="text/javascript" src="{% static 'mycalendar/js/test.js' %}"></script>
+
+{% endblock %}
+
+
+{% block header %}
+
+{% include 'mycalendar/includes/header.html' %}
+
+    <ul class="nav nav-tabs hidden-xs">
+        <li class="nav-item">
+            <a class="nav-link {% if page_name == 'car_table' %}active{% endif %}" href='/mycalendar/car_table/{{now.year}}/{{now.month}}/{{ now.day }}/'>車両</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link {% if page_name == 'car_record' %}active{% endif %}" href='/mycalendar/car_record/{{now.year}}/{{now.month}}/{{ now.day }}/'>運行記録</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if page_name == 'refuel_record' %}active{% endif %}" href='/mycalendar/refuel_record/{{now.year}}/{{now.month}}/{{ now.day }}/'>給油記録</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if page_name == 'etc_record' %}active{% endif %}" href='/mycalendar/etc_record/{{now.year}}/{{now.month}}/{{ now.day }}/'>ETC記録</a>
+        </li>
+    </ul>
+
+
+{% endblock %}
+
+
+{% block main %}
+
+<div class="row">
+    <div class="col-md-3">
+        {% include 'mycalendar/includes/month_calendar.html' %}
+
+    </div>
+    <div class="col-md-8">
+        {% if page_name == 'car_table' %}{% include 'mycalendar/includes/car_table.html' %}{% endif %}
+        {% if page_name == 'car_record' %}{% include 'mycalendar/includes/car_record.html' %}{% endif %}
+        {% if page_name == 'refuel_record' %}{% include 'mycalendar/includes/refuel_record.html' %}{% endif %}
+        {% if page_name == 'etc_record' %}{% include 'mycalendar/includes/etc_record.html' %}{% endif %}
+        {% if page_name == 'car_reserve' %}{% include 'mycalendar/includes/car_reserve.html' %}{% endif %}
+        {% if page_name == 'car_maintenance' %}{% include 'mycalendar/includes/car_maintenance.html' %}{% endif %}
+        {% if page_name == 'my_record' %}{% include 'mycalendar/includes/my_record.html' %}{% endif %}
+        {% if page_name == 'my_reserve' %}{% include 'mycalendar/includes/my_reserve.html' %}{% endif %}
+    </div>
+    <div class ="col-md-1"></div>
+</div>
+
+
+
+
+
+
+
+{% endblock %}

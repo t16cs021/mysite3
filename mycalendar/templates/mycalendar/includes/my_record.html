@@ -1,0 +1,212 @@
+ここでは車両のユーザ記録一覧を表示する。
+
+<hr>
+
+{% for item in record_list %}
+
+<!-- Button trigger modal -->
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">開始日時</th>
+      <th scope="col">給油記録</th>
+      <th scope="col">ETC記録</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{item.car_record.start_date}}</td>
+      <td>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal_{{item.car_record.id}}_refuel_0">
+  確認
+</button> 
+<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal_{{item.car_record.id}}_refuel_1">
+  追加
+</button>
+      </td>
+      <td>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal_{{item.car_record.id}}_etc_0">
+  確認
+</button>
+<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal_{{item.car_record.id}}_etc_1">
+  追加
+</button>
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal_{{item.car_record.id}}_refuel_0" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{item.car_record.start_date}}〜<br>{{item.car_record.end_date}} の給油記録</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+	<table class="table">
+	  <thead class="thead-light">
+	    <tr>
+	      <th scope="col">給油日</th>
+	      <th scope="col">給油場所</th>
+	      <th scope="col">給油料</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {% for item2 in item.refuel_records %}
+	    <tr>
+	      <td>{{ item2.date }}</td>
+	      <td>{{ item2.location }}</td>
+	      <td>{{ item2.amount }}</td>
+	    </tr>
+	    {% endfor %}
+	  </tbody>
+	</table>	
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal_{{item.car_record.id}}_refuel_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{item.car_record.start_date}}〜<br>{{item.car_record.end_date}} の給油記録追加</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+	<form action="" method="POST" >
+	  {% csrf_token %}
+	  <input name="key" id="id_key" value="{{item.car_record.id}}" hidden>
+	  <table class="table">
+	    <tbody>
+	      <tr>
+		<td>給油日</td>
+		<td>{{ item.refuel_form.date }}</td>
+	      </tr>
+	      <tr>
+		<td>給油場所</td>
+		<td>{{ item.refuel_form.location }}</td>
+	      </tr>
+	      <tr>
+		<td>走行距離数</td>
+		<td>{{ item.refuel_form.distance }}</td>
+	      </tr>
+	      <tr>
+		<td>給油量</td>
+		<td>{{ item.refuel_form.amount }}</td>
+	      </tr>
+	    </tbody>
+	  </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">追加</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal_{{item.car_record.id}}_etc_0" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{item.car_record.start_date}}〜<br>{{item.car_record.end_date}} のETC記録</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+	<table class="table">
+	  <thead class="thead-light">
+	    <tr>
+	      <th scope="col">利用日</th>
+	      <th scope="col">走行区間</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {% for item2 in item.etc_records %}
+	    <tr>
+	      <td>{{ item2.date }}</td>
+	      <td>{{ item2.section }}</td>
+	    </tr>
+	    {% endfor %}
+	  </tbody>
+	</table>	
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal_{{item.car_record.id}}_etc_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{item.car_record.start_date}}〜<br>{{item.car_record.end_date}} のETC記録追加</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+	<form action="" method="POST" >
+	  {% csrf_token %}
+	  <input name="key" id="id_key" value="{{item.car_record.id}}" hidden>
+	  <table class="table">
+	    <tbody>
+	      <tr>
+		<td>ETC利用日</td>
+		<td>{{ item.etc_form.date }}</td>
+	      </tr>
+	      <tr>
+		<td>利用区間</td>
+		<td>{{ item.etc_form.section }}</td>
+	      </tr>
+	    </tbody>
+	  </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">追加</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endfor %}
+

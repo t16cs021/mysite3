@@ -1,0 +1,18 @@
+ここでは車両のETC利用状況一覧を表示する。
+
+<table class="table table-bordered">
+  <thead class="thead-dark">
+    <tr>
+	<th scope="col">ETC利用日</th>
+	<th scope="col">走行区間</th>
+    </tr>
+  </thead>
+    <tbody>
+    {% for item in etc_record %}
+    <tr>
+	<td>{{item.date}}</td>
+	<td>{{item.section}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

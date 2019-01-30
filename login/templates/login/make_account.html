@@ -1,0 +1,45 @@
+{% extends "login/base.html" %}
+
+{% load static %}
+
+{% block title %}ログインページ{% endblock %}
+
+{% block login_index %}
+
+<!--
+
+
+
+<font color="red">{{warning_text}}</font>
+
+-->
+
+
+
+
+<form method="post" id="make_account">
+{% csrf_token %}
+    <fieldset id="inputs2">
+      社員番号：{{ form.username }}
+      氏名：{{ form.full_name }}
+      メールアドレス：{{ form.email }}
+      パスワード：{{ form.password }}
+      パスワード(確認用)：{{ form.password_check }}
+    </fieldset>
+    <fieldset id="actions">
+        <input type="submit" id="submit" value="アカウント作成">
+        <a href="/">パスワードを忘れましたか？</a><a href="{% url 'login'%}">ログイン</a>
+    </fieldset>
+    <a href="/" id="back">Back to article...</a>
+</form>
+
+
+
+
+<div>
+    <a href="/admin/">管理者ページへ</a><br>
+</div>
+
+
+<script type="text/javascript" src="{% static 'login/js/test.js' %}"></script>
+{% endblock %}

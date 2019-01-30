@@ -1,0 +1,28 @@
+{% extends "login/base.html" %}
+
+{% load static %}
+
+{% block title %}ログインページ{% endblock %}
+
+{% block login_index %}
+
+
+<form method="post" id="login">
+   {{ form.non_field_errors }}
+    <img src="/static/login/img/logo.svg"></img>
+    <fieldset id="inputs">
+      <font color="red">{{warning_text}}</font>
+      {{ form.username }} 
+      {{ form.password }}
+    </fieldset>
+    <fieldset id="actions">
+{% csrf_token %}
+        <input type="submit" id="submit" value="ログイン">
+        <a href="/">パスワードを忘れましたか？</a><a href="{% url 'make_account' %}">アカウント作成</a>
+    </fieldset>
+    <a href="/" id="back">Back to article...</a>
+</form>
+
+
+<script type="text/javascript" src="{% static 'login/js/test.js' %}"></script>
+{% endblock %}
